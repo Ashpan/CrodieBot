@@ -12,5 +12,9 @@ module.exports = {
         .then(async url => {
             await interaction.reply(url["url"]);
         })
+        .catch((error) => {
+            console.log(error);
+
+        })
   },
 };
