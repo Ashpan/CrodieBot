@@ -3,7 +3,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, Events, GatewayIntentBits, Partials } = require("discord.js");
 const { token } = require("./config.json");
-const { handleReaction } = require('./events/messageReactionHandler');
+const { handleReactionAdd, handleReactionRemove } = require('./events/messageReactionHandler');
 
 // Create a new client instance
 const client = new Client({
@@ -41,7 +41,8 @@ client.once(Events.ClientReady, (c) => {
 });
 
 //Handling message-react events
-client.on(Events.MessageReactionAdd, handleReaction);
+client.on(Events.MessageReactionAdd, handleReactionAdd);
+client.on(Events.MessageReactionRemove, handleReactionRemove);
 
 client.on(Events.InteractionCreate, async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
