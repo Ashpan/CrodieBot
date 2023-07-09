@@ -40,12 +40,8 @@ client.once(Events.ClientReady, (c) => {
   console.log(`Ready! Logged in as ${c.user.tag}`);
 });
 
-//Handling message-react events
-client.on(Events.MessageReactionAdd, handleReactionAdd);
-client.on(Events.MessageReactionRemove, handleReactionRemove);
-
 client.on(Events.InteractionCreate, async (interaction) => {
-  if (!interaction.isChatInputCommand()) return;
+  if (!interaction.isChatInputCommand() && !interaction.isMessageContextMenuCommand()) return;
 
   const command = interaction.client.commands.get(interaction.commandName);
 
