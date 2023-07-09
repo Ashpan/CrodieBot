@@ -1,11 +1,15 @@
 // Require the necessary discord.js classes
 const fs = require("node:fs");
 const path = require("node:path");
-const { Client, Collection, Events, GatewayIntentBits } = require("discord.js");
+const { Client, Collection, Events, GatewayIntentBits, Partials } = require("discord.js");
 const { token } = require("./config.json");
+const { handleReaction } = require('./events/messageReactionHandler');
 
 // Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({
+	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMessageReactions],
+	partials: [Partials.Message, Partials.Channel, Partials.Reaction],
+});
 
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, "commands");
@@ -35,6 +39,9 @@ for (const folder of commandFolders) {
 client.once(Events.ClientReady, (c) => {
   console.log(`Ready! Logged in as ${c.user.tag}`);
 });
+
+//Handling message-react events
+client.on(Events.MessageReactionAdd, handleReaction);
 
 client.on(Events.InteractionCreate, async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
