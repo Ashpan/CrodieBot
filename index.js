@@ -1,13 +1,27 @@
 // Require the necessary discord.js classes
 const fs = require("node:fs");
 const path = require("node:path");
-const { Client, Collection, Events, GatewayIntentBits, Partials } = require("discord.js");
+const {
+  Client,
+  Collection,
+  Events,
+  GatewayIntentBits,
+  Partials,
+  InteractionType,
+} = require("discord.js");
 const { token } = require("./config.json");
+const { handleModalInteraction } = require("./events/modalHandler.js");
+const { handleButtonInteraction } = require("./events/buttonHandler.js");
+const { handleSelectMenuInteraction } = require("./events/selectMenuHandler.js");
 
 // Create a new client instance
 const client = new Client({
-	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMessageReactions],
-	partials: [Partials.Message, Partials.Channel, Partials.Reaction],
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildMessageReactions,
+  ],
+  partials: [Partials.Message, Partials.Channel, Partials.Reaction],
 });
 
 client.commands = new Collection();
@@ -40,29 +54,45 @@ client.once(Events.ClientReady, (c) => {
 });
 
 client.on(Events.InteractionCreate, async (interaction) => {
-  if (!interaction.isChatInputCommand() && !interaction.isMessageContextMenuCommand()) return;
-
-  const command = interaction.client.commands.get(interaction.commandName);
-
-  if (!command) {
-    console.error(`No command matching ${interaction.commandName} was found.`);
+  if (
+    !interaction.isChatInputCommand() &&
+    !interaction.isMessageContextMenuCommand() &&
+    !interaction.isButton() &&
+    !interaction.isModalSubmit
+  )
     return;
-  }
 
-  try {
-    await command.execute(interaction);
-  } catch (error) {
-    console.error(error);
-    if (interaction.replied || interaction.deferred) {
-      await interaction.followUp({
-        content: "There was an error while executing this command!",
-        ephemeral: true,
-      });
-    } else {
-      await interaction.reply({
-        content: "There was an error while executing this command!",
-        ephemeral: true,
-      });
+  if (interaction.type === InteractionType.ModalSubmit) {
+    return await handleModalInteraction(interaction);
+  } else if (interaction.isButton()) {
+    return await handleButtonInteraction(interaction);
+  } else if (interaction.isStringSelectMenu()) {
+    return handleSelectMenuInteraction(interaction);
+  } else {
+    let commandCaller = interaction.commandName;
+    console.log(`Command called: ${commandCaller}`);
+    const command = interaction.client.commands.get(commandCaller);
+
+    if (!command) {
+      console.error(`No command matching ${commandCaller} was found.`);
+      return;
+    }
+
+    try {
+      await command.execute(interaction);
+    } catch (error) {
+      console.error(error);
+      if (interaction.replied || interaction.deferred) {
+        await interaction.followUp({
+          content: "There was an error while executing this command!",
+          ephemeral: true,
+        });
+      } else {
+        await interaction.reply({
+          content: "There was an error while executing this command!",
+          ephemeral: true,
+        });
+      }
     }
   }
 });
