@@ -3,19 +3,18 @@ const reactionPin = async (reaction, user) => {
     try {
       await reaction.message.fetch();
     } catch (error) {
-      console.error('Something went wrong when fetching the message: ', error);
+      console.error("Something went wrong when fetching the message: ", error);
     }
   }
 
-  reaction.message.guild.members.fetch(user.id)
-    .then(member =>
-      member.roles.cache.some(role => role.name === "pin")
-    )
+  reaction.message.guild.members
+    .fetch(user.id)
+    .then((member) => member.roles.cache.some((role) => role.name === "pin"))
     .then(function (hasRole) {
-      if (hasRole && reaction.emoji.name == '📌') {
+      if (hasRole && reaction.emoji.name == "📌") {
         reaction.message.pin();
       }
     });
-}
+};
 
 export default reactionPin;

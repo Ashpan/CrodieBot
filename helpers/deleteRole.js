@@ -6,7 +6,10 @@ const deleteRole = async (interaction) => {
   if (roleToDelete) {
     try {
       await roleToDelete.delete();
-      await interaction.reply({content: "Role has been deleted.", ephemeral: true});
+      await interaction.reply({
+        content: "Role has been deleted.",
+        ephemeral: true,
+      });
     } catch (error) {
       console.error(error);
       await interaction.reply("An error occurred while deleting the role.");

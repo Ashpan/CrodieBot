@@ -6,7 +6,10 @@ const createRole = (interaction) => {
       mentionable: true,
     })
     .then(
-      interaction.reply({content: `Created role \`@${roleName}\``, ephemeral: true})
+      interaction.reply({
+        content: `Created role \`@${roleName}\``,
+        ephemeral: true,
+      })
     );
 };
 

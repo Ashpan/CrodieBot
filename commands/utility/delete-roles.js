@@ -3,12 +3,7 @@ const {
   ButtonBuilder,
   ButtonStyle,
   ActionRowBuilder,
-  TextInputBuilder,
   StringSelectMenuBuilder,
-  TextInputStyle,
-  ComponentType,
-  Events,
-  ModalBuilder,
 } = require("discord.js");
 
 module.exports = {
@@ -37,7 +32,7 @@ module.exports = {
       roleNameMenu.addOptions({
         label: role.name,
         value: role.id,
-      } );
+      });
     });
 
     if (roleNameMenu.options.length == 0) {
@@ -46,7 +41,6 @@ module.exports = {
         ephemeral: true,
       });
     }
-
 
     const confirmButton = new ButtonBuilder()
       .setCustomId("deleteRoleConfirm")

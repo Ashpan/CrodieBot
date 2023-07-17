@@ -21,8 +21,7 @@ const addRole = async (interaction) => {
       content: `You have been added to the ${roleToAdd.name} role.`,
       ephemeral: true,
     });
-  }
-  catch (error) {
+  } catch (error) {
     console.error(error);
     await interaction.reply({
       content: "There was an error while executing this command!",

@@ -1,4 +1,9 @@
-const { SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require("discord.js");
+const {
+  SlashCommandBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  ActionRowBuilder,
+} = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -6,18 +11,17 @@ module.exports = {
     .setDescription("lets users join and leave roles."),
   async execute(interaction) {
     const addRoles = new ButtonBuilder()
-			.setCustomId('add-roles')
-			.setLabel('Join Roles')
-			.setStyle(ButtonStyle.Primary);
+      .setCustomId("add-roles")
+      .setLabel("Join Roles")
+      .setStyle(ButtonStyle.Primary);
     const removeRoles = new ButtonBuilder()
-			.setCustomId('remove-roles')
-			.setLabel('Leave Roles')
-			.setStyle(ButtonStyle.Primary);
-    const row = new ActionRowBuilder()
-    .addComponents([addRoles, removeRoles]);
+      .setCustomId("remove-roles")
+      .setLabel("Leave Roles")
+      .setStyle(ButtonStyle.Primary);
+    const row = new ActionRowBuilder().addComponents([addRoles, removeRoles]);
     await interaction.reply({
       components: [row],
-      ephemeral: true
+      ephemeral: true,
     });
   },
 };
