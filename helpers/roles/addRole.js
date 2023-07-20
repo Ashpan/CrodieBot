@@ -1,4 +1,4 @@
-const { getRoleIdToDelete } = require("../events/selectMenuHandler");
+const { getRoleIdToDelete } = require("../../events/selectMenuHandler");
 
 const addRole = async (interaction) => {
   const selectedRoleId = getRoleIdToDelete(interaction.member.id);
