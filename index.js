@@ -12,7 +12,9 @@ const {
 const { token } = require("./config.json");
 const { handleModalInteraction } = require("./events/modalHandler.js");
 const { handleButtonInteraction } = require("./events/buttonHandler.js");
-const { handleSelectMenuInteraction } = require("./events/selectMenuHandler.js");
+const {
+  handleSelectMenuInteraction,
+} = require("./events/selectMenuHandler.js");
 
 // Create a new client instance
 const client = new Client({

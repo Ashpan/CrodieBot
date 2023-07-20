@@ -1,6 +1,5 @@
 # New-Bot
 
-
 ## Table of Contents
 
 - [Installation](#installation)
@@ -34,13 +33,15 @@ Now to create and invite a bot to a server go through the following steps.
 ---
 
 Now in the project root create a file called config.json with the following contents
+
 ```json
 {
-    "token": "TOKEN",
-    "clientId": "CLIENT_ID",
-    "guildIds": ["SERVER_IDS"]
+  "token": "TOKEN",
+  "clientId": "CLIENT_ID",
+  "guildIds": ["SERVER_IDS"]
 }
 ```
+
 Make sure to replace `TOKEN` with your bot token, `CLIENT_ID` with the bot application client id, and the `SERVER_IDS` with the ID of the servers the bot will be used in.
 
 If you want to include multiple it should look like `["SERVER_1_ID", "SERVER_2_ID", "SERVER_3_ID"] `.
