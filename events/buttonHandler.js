@@ -1,6 +1,6 @@
-const { deleteRole } = require("../helpers/deleteRole.js");
-const { addRole } = require("../helpers/addRole.js");
-const { removeRole } = require("../helpers/removeRole.js");
+const { deleteRole } = require("../helpers/roles/deleteRole.js");
+const { addRole } = require("../helpers/roles/addRole.js");
+const { removeRole } = require("../helpers/roles/removeRole.js");
 
 const handleButtonInteraction = async (interaction) => {
   if (interaction.customId === "deleteRoleConfirm") {

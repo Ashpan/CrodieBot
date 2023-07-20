@@ -1,4 +1,4 @@
-const { createRole } = require("../helpers/createRole.js");
+const { createRole } = require("../helpers/roles/createRole.js");
 
 const handleModalInteraction = async (interaction) => {
   if (interaction.customId == "roleCreateModal") {

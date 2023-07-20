@@ -15,6 +15,7 @@ const { handleButtonInteraction } = require("./events/buttonHandler.js");
 const {
   handleSelectMenuInteraction,
 } = require("./events/selectMenuHandler.js");
+const { handleVoiceState } = require("./events/voiceHandler.js");
 
 // Create a new client instance
 const client = new Client({
@@ -22,6 +23,7 @@ const client = new Client({
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildMessageReactions,
+    GatewayIntentBits.GuildVoiceStates,
   ],
   partials: [Partials.Message, Partials.Channel, Partials.Reaction],
 });
@@ -53,6 +55,10 @@ for (const folder of commandFolders) {
 // We use 'c' for the event parameter to keep it separate from the already defined 'client'
 client.once(Events.ClientReady, (c) => {
   console.log(`Ready! Logged in as ${c.user.tag}`);
+});
+
+client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
+  return await handleVoiceState(oldState, newState);
 });
 
 client.on(Events.InteractionCreate, async (interaction) => {
