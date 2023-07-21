@@ -12,7 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chrono-node": "^2.6.4",
     "discord.js": "^14.11.0",
+    "moment": "^2.29.4",
+    "mongodb": "^5.7.0",
     "nodemon": "^2.0.22"
   },
   "devDependencies": {

@@ -9,13 +9,18 @@ const {
   Partials,
   InteractionType,
 } = require("discord.js");
-const { token } = require("./config.json");
+const { TOKEN } = require("./config.json");
 const { handleModalInteraction } = require("./events/modalHandler.js");
 const { handleButtonInteraction } = require("./events/buttonHandler.js");
 const {
   handleSelectMenuInteraction,
 } = require("./events/selectMenuHandler.js");
 const { handleVoiceState } = require("./events/voiceHandler.js");
+const { Database } = require("./database");
+const {
+  initReminderHandler,
+  checkReminders,
+} = require("./events/reminderHandler.js");
 
 // Create a new client instance
 const client = new Client({
@@ -27,6 +32,24 @@ const client = new Client({
   ],
   partials: [Partials.Message, Partials.Channel, Partials.Reaction],
 });
+
+const db = new Database((originModule = "INDEX"));
+const run = async () => {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    const dbClient = await db.connect();
+    // Send a ping to confirm a successful connection
+    await dbClient.db("new_bot_dev").command({ ping: 1 });
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    );
+  } catch (error) {
+    console.log({ error: error });
+  } finally {
+    // Ensures that the client will close when you finish/error
+    db.disconnect();
+  }
+};
 
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, "commands");
@@ -55,6 +78,10 @@ for (const folder of commandFolders) {
 // We use 'c' for the event parameter to keep it separate from the already defined 'client'
 client.once(Events.ClientReady, (c) => {
   console.log(`Ready! Logged in as ${c.user.tag}`);
+
+  initReminderHandler().then(() => {
+    setInterval(() => checkReminders(client), 60000);
+  });
 });
 
 client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
@@ -105,5 +132,6 @@ client.on(Events.InteractionCreate, async (interaction) => {
   }
 });
 
-// Log in to Discord with your client's token
-client.login(token);
+// Log in to Discord with your client's TOKEN
+client.login(TOKEN);
+run().catch(console.dir);
