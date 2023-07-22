@@ -36,9 +36,9 @@ Now in the project root create a file called config.json with the following cont
 
 ```json
 {
-  "token": "TOKEN",
-  "clientId": "CLIENT_ID",
-  "guildIds": ["SERVER_IDS"]
+  "TOKEN": "TOKEN",
+  "CLIENT_ID": "CLIENT_ID",
+  "GUILD_IDS": ["SERVER_IDS"]
 }
 ```
 
