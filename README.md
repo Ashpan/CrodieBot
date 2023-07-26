@@ -38,13 +38,18 @@ Now in the project root create a file called config.json with the following cont
 {
   "TOKEN": "TOKEN",
   "CLIENT_ID": "CLIENT_ID",
-  "GUILD_IDS": ["SERVER_IDS"]
+  "GUILD_IDS": ["SERVER_IDS"],
+  "DB_USERNAME": "MONGO_USERNAME",
+  "DB_PASSWORD": "MONGO_PASSWORD",
+  "DB_CLUSTER": "MONGO_CLUSTER"
 }
 ```
 
 Make sure to replace `TOKEN` with your bot token, `CLIENT_ID` with the bot application client id, and the `SERVER_IDS` with the ID of the servers the bot will be used in.
 
 If you want to include multiple it should look like `["SERVER_1_ID", "SERVER_2_ID", "SERVER_3_ID"] `.
+
+`MONGO_USERNAME` with the username of the mongoDB database you will be using and `MONGO_PASSWORD` with the password for the database. You can create it using [MongoDB Atlas](https://www.mongodb.com/cloud/atlas). `MONGO_CLUSTER` with the cluster url like `cluster0.xyz.mongo.net`.
 
 ## Usage
 
