@@ -1,7 +1,7 @@
 const { MongoClient, ServerApiVersion } = require("mongodb");
-const { DB_USERNAME, DB_PASSWORD } = require("./config.json");
+const { DB_USERNAME, DB_PASSWORD, DB_CLUSTER } = require("./config.json");
 
-const uri = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@cluster0.5wgwvln.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@${DB_CLUSTER}/?retryWrites=true&w=majority`;
 
 class Database {
   dbClient;
