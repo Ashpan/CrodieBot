@@ -1,7 +1,9 @@
 const {
   ContextMenuCommandBuilder,
   ApplicationCommandType,
+  PermissionFlagsBits,
 } = require("discord.js");
+const { hasPermission } = require("../../helpers/generic/permissions");
 
 module.exports = {
   data: new ContextMenuCommandBuilder()
@@ -9,7 +11,9 @@ module.exports = {
     .setType(ApplicationCommandType.Message),
   async execute(interaction) {
     // Check if the user has the manage messages role
-    if (!interaction.member.permissions.has("MANAGE_MESSAGES")) {
+    if (
+      !hasPermission(interaction.member, PermissionFlagsBits.ManageMessages)
+    ) {
       return await interaction.reply({
         content: "You do not have permission to use this command.",
         ephemeral: true,

@@ -4,7 +4,9 @@ const {
   ButtonStyle,
   ActionRowBuilder,
   StringSelectMenuBuilder,
+  PermissionFlagsBits,
 } = require("discord.js");
+const { hasPermission } = require("../../helpers/generic/permissions");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -12,7 +14,7 @@ module.exports = {
     .setDescription("lets admins delete roles."),
   async execute(interaction) {
     // check if user is an administrator
-    if (!interaction.member.permissions.has("ADMINISTRATOR")) {
+    if (!hasPermission(interaction.member, PermissionFlagsBits.Administrator)) {
       return await interaction.reply({
         content: "You must be an administrator to use this command.",
         ephemeral: true,
