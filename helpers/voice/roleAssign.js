@@ -18,20 +18,20 @@ const getRoleId = async (newState, roleName) => {
 const roleAssign = async (oldState, newState) => {
   if (oldState.channel === null) {
     //Just joined, give them vc role
-    roleName = newState.channel.name + " -VC";
+    roleName = `${newState.channel.name} -VC`;
     roleId = await getRoleId(newState, roleName);
     newState.member.roles.add(roleId);
   } else if (newState.channel === null) {
     //Just left, remove role
-    roleName = oldState.channel.name + " -VC";
+    roleName = `${oldState.channel.name} -VC`;
     roleId = await getRoleId(newState, roleName);
     newState.member.roles.remove(roleId);
   } else {
     //Moved VC, remove old role, add new role
-    roleName = oldState.channel.name + " -VC";
+    roleName = `${oldState.channel.name} -VC`;
     roleId = await getRoleId(newState, roleName);
     newState.member.roles.remove(roleId);
-    roleName = newState.channel.name + " -VC";
+    roleName = `${newState.channel.name} -VC`;
     roleId = await getRoleId(newState, roleName);
     newState.member.roles.add(roleId);
   }
