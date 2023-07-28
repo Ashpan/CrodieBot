@@ -28,15 +28,14 @@ const checkReminders = async (client) => {
       // Get the user ID from the reminder and send a reminder message
       const user = await client.users.fetch(reminder.userId);
       const channel = await client.channels.fetch(reminder.channelId);
-      console.log({ channel: channel });
       channel.send(
         `## Reminder 🔔\n<@${user.id}>: ${reminder.reminderMessage}`
       );
 
       // Remove the triggered reminder from the collection
       await remindersCollection.deleteOne({ _id: reminder._id });
-      await db.disconnect((silent = true));
     }
+    await db.disconnect((silent = true));
   } catch (error) {
     if (error instanceof MongoNotConnectedError) {
       console.log("MongoDB not connected");
