@@ -5,7 +5,10 @@ const createReminder = async (interaction) => {
   const reminderTime = interaction.fields.getTextInputValue("reminderTime");
   const reminderMessage =
     interaction.fields.getTextInputValue("reminderMessage");
-  const parseDate = chrono.parse(reminderTime, { forwardDate: true });
+  currentDate = new Date();
+  const parseDate = chrono.parse(reminderTime, currentDate, {
+    forwardDate: true,
+  });
   if (parseDate.length === 0) {
     return await interaction.reply({
       content: "I couldn't understand the time you provided. Please try again",
