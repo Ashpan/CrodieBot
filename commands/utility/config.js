@@ -14,7 +14,11 @@ module.exports = {
       .setCustomId("manage-roles")
       .setLabel("Manage Roles")
       .setStyle(ButtonStyle.Primary);
-    const row = new ActionRowBuilder().addComponents(roles);
+    const birthdayChannel = new ButtonBuilder()
+      .setCustomId("birthday-channel")
+      .setLabel("Birthday Channel")
+      .setStyle(ButtonStyle.Primary);
+    const row = new ActionRowBuilder().addComponents(roles, birthdayChannel);
     await interaction.reply({ components: [row], ephemeral: true });
   },
 };

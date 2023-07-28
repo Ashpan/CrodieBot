@@ -1,7 +1,7 @@
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const { DB_USERNAME, DB_PASSWORD } = require("./config.json");
 
-const uri = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@cluster0.5wgwvln.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@${DB_CLUSTER}/?retryWrites=true&w=majority`;
 
 class Database {
   dbClient;
@@ -20,6 +20,12 @@ class Database {
     this.remindersCollection = this.dbClient
       .db("new_bot_dev")
       .collection("reminders");
+    this.birthdaysCollection = this.dbClient
+      .db("new_bot_dev")
+      .collection("birthdays");
+    this.configCollection = this.dbClient
+      .db("new_bot_dev")
+      .collection("config");
   }
 
   async connect(silent = false) {
