@@ -54,10 +54,10 @@ const getBirthdayChannel = async (guildId) => {
   }
 };
 
-const initBirthdayHandler = async () => {
+const initBirthdayHandler = async (client) => {
   try {
     // Connect to the database
-    dbClient = await db.connect();
+    await db.connect();
     birthdaysCollection = db.birthdaysCollection;
     await db.disconnect();
   } catch (error) {
@@ -67,9 +67,9 @@ const initBirthdayHandler = async () => {
   // Schedule a check for every night at midnight
   cron.schedule(
     "0 0 * * *",
-    () => {
+    async () => {
       console.log("Running birthday check");
-      checkBirthdays(client);
+      await checkBirthdays(client);
     },
     {
       scheduled: true,
@@ -81,7 +81,7 @@ const initBirthdayHandler = async () => {
 const checkBirthdays = async (client) => {
   try {
     // Connect to the database
-    dbClient = await db.connect((silent = true));
+    await db.connect((silent = true));
     configCollection = db.configCollection;
 
     const currentTime = new Date();
