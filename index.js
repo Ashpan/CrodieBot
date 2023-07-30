@@ -84,7 +84,7 @@ client.once(Events.ClientReady, (c) => {
     setInterval(() => checkReminders(client), 60000);
   });
 
-  initBirthdayHandler();
+  initBirthdayHandler(client);
 });
 
 client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
