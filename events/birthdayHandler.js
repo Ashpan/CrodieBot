@@ -105,9 +105,13 @@ const checkBirthdays = async (client) => {
       const randomGif =
         BIRTHDAY_GIFS[Math.floor(Math.random() * BIRTHDAY_GIFS.length)];
 
+      //get users current age
+      const dateObject = new Date(birthday.date);
+      const userAge = dateObject.getFullYear() - birthday.year;
+
       const birthdayEmbed = new EmbedBuilder()
         .setTitle(`Happy Birthday!`)
-        .setDescription(`${user}`)
+        .setDescription(`${user} turned ${userAge}!`)
         .setImage(randomGif);
       await channel.send({ embeds: [birthdayEmbed] });
 

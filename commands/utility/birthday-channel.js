@@ -3,21 +3,23 @@ const {
   ChannelSelectMenuBuilder,
   ActionRowBuilder,
   ChannelType,
+  PermissionFlagsBits,
 } = require("discord.js");
+const { hasPermission } = require("../../helpers/generic/permissions.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("birthday-channel")
     .setDescription("lets admins set a channel for birthday messages."),
   async execute(interaction) {
-    if (!interaction.member.permissions.has("ADMINISTRATOR")) {
+    if (!hasPermission(interaction.member, PermissionFlagsBits.Administrator)) {
       return await interaction.reply({
-        content: "You must be the server owner to use this command.",
+        content: "You must have administrative privileges to use this command.",
         ephemeral: true,
       });
     }
     const selectMenu = new ChannelSelectMenuBuilder()
-      .setCustomId("birthdayChanMenu")
+      .setCustomId("birthdayChannelMenu")
       .setChannelTypes(ChannelType.GuildText);
     const row = new ActionRowBuilder().addComponents(selectMenu);
     await interaction.reply({

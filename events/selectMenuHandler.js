@@ -7,7 +7,7 @@ const handleSelectMenuInteraction = (interaction) => {
     roleIdToDelete[userId] = interaction.values[0];
     interaction.deferUpdate();
   }
-  if (interaction.customId === "birthdayChanMenu") {
+  if (interaction.customId === "birthdayChannelMenu") {
     setBirthdayChannel(interaction);
   }
 };

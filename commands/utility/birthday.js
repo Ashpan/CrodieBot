@@ -1,6 +1,7 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
 const { createBirthday } = require("../../helpers/birthday/createBirthday.js");
 const { listBirthday } = require("../../helpers/birthday/listBirthday.js");
+const { hasPermission } = require("../../helpers/generic/permissions.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -13,7 +14,7 @@ module.exports = {
         .addStringOption((option) =>
           option
             .setName("birthday")
-            .setDescription("Enter your birthday")
+            .setDescription("Enter your birthday and year")
             .setRequired(true)
         )
     )
@@ -30,7 +31,7 @@ module.exports = {
         .addStringOption((option) =>
           option
             .setName("birthday")
-            .setDescription("Enter their birthday")
+            .setDescription("Enter their birthday and year")
             .setRequired(true)
         )
     )
@@ -43,15 +44,15 @@ module.exports = {
       const user = interaction.member;
       return await createBirthday(interaction, user);
     } else if (subCommand === "set") {
-      //if (
-      //  !interaction.member.permissions.has(PermissionFlagsBits.Administrator)
-      //) {
-      //  return await interaction.reply({
-      //    content:
-      //      "You must have administrative privileges to use this command.",
-      //    ephemeral: true,
-      //  });
-      //}
+      if (
+        !hasPermission(interaction.member, PermissionFlagsBits.Administrator)
+      ) {
+        return await interaction.reply({
+          content:
+            "You must have administrative privileges to use this command.",
+          ephemeral: true,
+        });
+      }
       const user = interaction.options.getUser("user");
       return await createBirthday(interaction, user);
     } else if (subCommand === "list") {
