@@ -3,6 +3,7 @@ const {
   ButtonBuilder,
   ButtonStyle,
   ActionRowBuilder,
+  PermissionFlagsBits,
 } = require("discord.js");
 
 module.exports = {
@@ -10,7 +11,7 @@ module.exports = {
     .setName("manage-roles")
     .setDescription("lets admins manage roles."),
   async execute(interaction) {
-    if (!interaction.member.permissions.has("ADMINISTRATOR")) {
+    if (!hasPermission(interaction.member, PermissionFlagsBits.Administrator)) {
       return await interaction.reply({
         content: "You must be the server owner to use this command.",
         ephemeral: true,

@@ -21,6 +21,7 @@ const {
   initReminderHandler,
   checkReminders,
 } = require("./events/reminderHandler.js");
+const { initBirthdayHandler } = require("./events/birthdayHandler.js");
 
 // Create a new client instance
 const client = new Client({
@@ -82,6 +83,8 @@ client.once(Events.ClientReady, (c) => {
   initReminderHandler().then(() => {
     setInterval(() => checkReminders(client), 60000);
   });
+
+  initBirthdayHandler();
 });
 
 client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
@@ -102,6 +105,8 @@ client.on(Events.InteractionCreate, async (interaction) => {
   } else if (interaction.isButton()) {
     return await handleButtonInteraction(interaction);
   } else if (interaction.isStringSelectMenu()) {
+    return handleSelectMenuInteraction(interaction);
+  } else if (interaction.isChannelSelectMenu()) {
     return handleSelectMenuInteraction(interaction);
   } else {
     let commandCaller = interaction.commandName;

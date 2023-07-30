@@ -20,6 +20,12 @@ class Database {
     this.remindersCollection = this.dbClient
       .db("new_bot_dev")
       .collection("reminders");
+    this.birthdaysCollection = this.dbClient
+      .db("new_bot_dev")
+      .collection("birthdays");
+    this.configCollection = this.dbClient
+      .db("new_bot_dev")
+      .collection("config");
   }
 
   async connect(silent = false) {
