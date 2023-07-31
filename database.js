@@ -1,5 +1,10 @@
 const { MongoClient, ServerApiVersion } = require("mongodb");
-const { DB_USERNAME, DB_PASSWORD, DB_CLUSTER } = require("./config.json");
+const {
+  DB_USERNAME,
+  DB_PASSWORD,
+  DB_CLUSTER,
+  DB_DATABASE_NAME,
+} = require("./config.json");
 
 const uri = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@${DB_CLUSTER}/?retryWrites=true&w=majority`;
 
@@ -18,13 +23,13 @@ class Database {
     });
     this.originModule = originModule;
     this.remindersCollection = this.dbClient
-      .db("new_bot_dev")
+      .db(`${DB_DATABASE_NAME}`)
       .collection("reminders");
     this.birthdaysCollection = this.dbClient
-      .db("new_bot_dev")
+      .db(`${DB_DATABASE_NAME}`)
       .collection("birthdays");
     this.configCollection = this.dbClient
-      .db("new_bot_dev")
+      .db(`${DB_DATABASE_NAME}`)
       .collection("config");
   }
 
