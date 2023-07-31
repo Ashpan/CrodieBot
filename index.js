@@ -9,7 +9,7 @@ const {
   Partials,
   InteractionType,
 } = require("discord.js");
-const { TOKEN } = require("./config.json");
+const { TOKEN, DB_DATABASE_NAME } = require("./config.json");
 const { handleModalInteraction } = require("./events/modalHandler.js");
 const { handleButtonInteraction } = require("./events/buttonHandler.js");
 const {
@@ -40,7 +40,7 @@ const run = async () => {
     // Connect the client to the server	(optional starting in v4.7)
     const dbClient = await db.connect();
     // Send a ping to confirm a successful connection
-    await dbClient.db("new_bot_dev").command({ ping: 1 });
+    await dbClient.db(`${DB_DATABASE_NAME}`).command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
