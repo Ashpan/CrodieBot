@@ -5,7 +5,7 @@ module.exports = {
     .setName("waifu")
     .setDescription("Replies with Waifu!"),
   async execute(interaction) {
-    fetch("https://api.waifu.pics/sfw/waifu/bonk")
+    fetch("https://api.waifu.pics/sfw/bonk")
       .then((response) => {
         return response.json();
       })
