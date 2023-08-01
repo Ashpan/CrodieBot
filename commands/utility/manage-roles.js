@@ -5,6 +5,7 @@ const {
   ActionRowBuilder,
   PermissionFlagsBits,
 } = require("discord.js");
+const { hasPermission } = require("../../helpers/generic/permissions");
 
 module.exports = {
   data: new SlashCommandBuilder()
