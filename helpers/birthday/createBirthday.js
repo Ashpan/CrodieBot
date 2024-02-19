@@ -28,7 +28,6 @@ const createBirthday = async (interaction, user) => {
   const date = parseDateString[0].start.date();
   const db = new Database((originModule = "CRT BIR"));
   try {
-    await db.connect();
     // Find and update the birthday or create a new one if not found
     await db.birthdaysCollection.findOneAndUpdate(
       { userId: userId, guildId: guildId },
@@ -41,7 +40,6 @@ const createBirthday = async (interaction, user) => {
       },
       { upsert: true, new: true }
     );
-    await db.disconnect();
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
     return;

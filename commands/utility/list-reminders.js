@@ -11,7 +11,6 @@ module.exports = {
 
     try {
       const db = new Database((originModule = "LS-REM"));
-      await db.connect();
       const userReminders = await db.remindersCollection
         .find({ userId })
         .toArray();
@@ -24,7 +23,6 @@ module.exports = {
             reminder.reminderMessage
           }\nTime: <t:${parseInt(reminder.reminderTime.getTime() / 1000)}:R>`
       );
-      await db.disconnect();
 
       const embed = new EmbedBuilder()
         .setTitle("Your Saved Reminders")

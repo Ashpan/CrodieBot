@@ -44,9 +44,7 @@ const saveReminder = async (
     reminderMessage: reminderMessage,
   };
   const db = new Database();
-  await db.connect();
   await db.remindersCollection.insertOne(reminder);
-  await db.disconnect();
 };
 
 module.exports = { createReminder };

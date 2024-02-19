@@ -6,7 +6,6 @@ const listBirthday = async (interaction) => {
   const db = new Database((originModule = "LST BIR"));
   try {
     // Connect to the database
-    await db.connect();
     const birthdaysCollection = db.birthdaysCollection;
 
     //return birthdays of matching guild, sorted by date relative to today
@@ -29,7 +28,6 @@ const listBirthday = async (interaction) => {
       },
     ];
     const birthdays = await birthdaysCollection.aggregate(pipeline).toArray();
-    await db.disconnect();
 
     //return embed with list of birthdays
     const color = COLOR_CODES[Math.floor(Math.random() * COLOR_CODES.length)];

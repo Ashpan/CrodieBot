@@ -21,7 +21,7 @@ const {
   initReminderHandler,
   checkReminders,
 } = require("./events/reminderHandler.js");
-const { initBirthdayHandler } = require("./events/birthdayHandler.js");
+const { initBirthdayHandler, checkBirthdays } = require("./events/birthdayHandler.js");
 
 // Create a new client instance
 const client = new Client({
@@ -46,9 +46,6 @@ const run = async () => {
     );
   } catch (error) {
     console.log({ error: error });
-  } finally {
-    // Ensures that the client will close when you finish/error
-    db.disconnect();
   }
 };
 
@@ -85,6 +82,7 @@ client.once(Events.ClientReady, (c) => {
   });
 
   initBirthdayHandler(client);
+  checkBirthdays(client);
 });
 
 client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
@@ -136,6 +134,31 @@ client.on(Events.InteractionCreate, async (interaction) => {
     }
   }
 });
+
+// Listen for process termination signals
+process.on('SIGINT', () => {
+  console.log('Received SIGINT. Closing database connection...');
+  shutdown();
+});
+
+process.on('SIGTERM', () => {
+  console.log('Received SIGTERM. Closing database connection...');
+  shutdown();
+});
+
+// Function to gracefully close the database connection
+const shutdown = async () => {
+  try {
+    await db.disconnect();
+    console.log('Database connection closed.');
+    process.exit(0); // Exit with success code
+  } catch (error) {
+    console.error('Error closing database connection:', error);
+    process.exit(1); // Exit with error code
+  }
+};
+
+
 
 // Log in to Discord with your client's TOKEN
 client.login(TOKEN);
